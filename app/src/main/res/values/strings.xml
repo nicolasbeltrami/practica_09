@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Practica_09</string>
-    <string name="name">Codigo</string>
+    <string name="name">ID</string>
     <string name="button">Eliminar</string>
     <string name="buttonMod">Modificar</string>
     <string name="buttonBusc">Buscar</string>
     <string name="buttonCrar">Registrar</string>
     <string name="txtNombre">Nombre</string>
-    <string name="precio">Precio</string>
+    <string name="precio">Edad</string>
 </resources>

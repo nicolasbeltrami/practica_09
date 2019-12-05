@@ -15,9 +15,9 @@ import com.nicolas.practica_09.Data.AdminSqLite;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText etCodigo;
+    private EditText etid;
     private EditText etNombre;
-    private EditText etPrecio;
+    private EditText etEdad;
     private Button btnCrear;
     private Button btnBuscar;
     private Button btnEliminar;
@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etCodigo = findViewById(R.id.txtId);
+        etid = findViewById(R.id.txtId);
         etNombre = findViewById(R.id.txtNombre);
-        etPrecio = findViewById(R.id.txtPrecio);
+        etEdad = findViewById(R.id.txtEdad);
         btnCrear =findViewById(R.id.btnRegistrar);
         btnBuscar = findViewById(R.id.btnBuscar);
         btnEliminar = findViewById(R.id.btnEliminar);
@@ -73,23 +73,23 @@ public class MainActivity extends AppCompatActivity {
         AdminSqLite  admin = new AdminSqLite(this, "administracion", null, 1);
         SQLiteDatabase db = admin.getWritableDatabase();
 
-        String codigo = etCodigo.getText().toString();
+        String id = etid.getText().toString();
         String nombre = etNombre.getText().toString();
-        String precio = etPrecio.getText().toString();
+        String edad = etEdad.getText().toString();
 
-        if (!codigo.isEmpty() && !nombre.isEmpty() && !precio.isEmpty()){
+        if (!id.isEmpty() && !nombre.isEmpty() && !edad.isEmpty()){
 
             ContentValues registro = new ContentValues();
 
-            registro.put("codigo", codigo);
+            registro.put("id", id);
             registro.put("nombre", nombre);
-            registro.put("precio", precio);
+            registro.put("edad", edad);
 
-            db.insert("articulos", null, registro);
+            db.insert("personas", null, registro);
             db.close();
-            etCodigo.setText("");
+            etid.setText("");
             etNombre.setText("");
-            etPrecio.setText("");
+            etEdad.setText("");
             Toast.makeText(this,"Registro Exitoso", Toast.LENGTH_LONG).show();
 
         }else {
@@ -102,14 +102,14 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase db = admin.getWritableDatabase();
 
 
-        String codigo = etCodigo.getText().toString();
+        String id = etid.getText().toString();
 
-        if (!codigo.isEmpty()){
-            Cursor fila = db.rawQuery("select nombre, precio from articulos where codigo ="+ codigo, null);
+        if (!id.isEmpty()){
+            Cursor fila = db.rawQuery("select nombre, edad from personas where id ="+ id, null);
 
             if (fila.moveToFirst()){
                 etNombre.setText(fila.getString(0));
-                etPrecio.setText(fila.getString(1));
+                etEdad.setText(fila.getString(1));
                 db.close();
             }else{
                 Toast.makeText(this, "No existe el artículo buscado", Toast.LENGTH_LONG).show();
@@ -124,15 +124,15 @@ public class MainActivity extends AppCompatActivity {
         AdminSqLite admin = new AdminSqLite(this, "administracion", null, 1);
         SQLiteDatabase db = admin.getWritableDatabase();
 
-        String codigo = etCodigo.getText().toString();
+        String id = etid.getText().toString();
 
-        if (!codigo.isEmpty()){
-            int cantidad = db.delete("articulos", "codigo =" + codigo, null);
+        if (!id.isEmpty()){
+            int cantidad = db.delete("personas", "id =" + id, null);
             db.close();
 
-            etCodigo.setText("");
+            etid.setText("");
             etNombre.setText("");
-            etPrecio.setText("");
+            etEdad.setText("");
 
             if (cantidad == 1){
                 Toast.makeText(this, "Producto eliminado exitosamente", Toast.LENGTH_LONG).show();
@@ -149,18 +149,18 @@ public class MainActivity extends AppCompatActivity {
         AdminSqLite admin = new AdminSqLite(this, "administracion", null, 1);
         SQLiteDatabase db = admin.getWritableDatabase();
 
-        String codigo = etCodigo.getText().toString();
+        String id = etid.getText().toString();
         String nombre = etNombre.getText().toString();
-        String precio = etPrecio.getText().toString();
+        String edad = etEdad.getText().toString();
 
-        if (!codigo.isEmpty() && !nombre.isEmpty() && !precio.isEmpty()){
+        if (!id.isEmpty() && !nombre.isEmpty() && !edad.isEmpty()){
 
             ContentValues registro = new ContentValues();
-            registro.put("codigo", codigo);
+            registro.put("id", id);
             registro.put("nombre", nombre);
-            registro.put("precio", precio);
+            registro.put("edad", edad);
 
-            int cantidad = db.update("articulos", registro, "codigo =" + codigo, null);
+            int cantidad = db.update("personas", registro, "id =" + id, null);
             db.close();
 
             if (cantidad == 1){
